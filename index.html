@@ -1,39 +1,61 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Yaari Junction</title>
 <style>
-body{margin:0;font-family:sans-serif;background:linear-gradient(to bottom,#0f172a,#1e3a8a);min-height:100vh;color:white}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,sans-serif;background:linear-gradient(180deg,#0f172a 0%,#1e3a8a 60%,#0ea5e9 100%);min-height:100vh;color:white}
 .center{min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:20px;text-align:center}
-.card{background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);padding:30px;border-radius:20px;max-width:380px;width:100%}
-.btn{background:#fdba74;color:black;font-weight:bold;padding:12px 30px;border-radius:999px;border:none;cursor:pointer;margin-top:20px;width:100%}
-input{width:100%;padding:12px;border-radius:12px;border:none;margin:6px 0;background:rgba(255,255,255,0.2);color:white;box-sizing:border-box}
+.card{background:rgba(255,255,255,0.12);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.2);padding:28px;border-radius:22px;max-width:400px;width:100%;box-shadow:0 10px 30px rgba(0,0,0,0.3)}
+.btn{background:linear-gradient(90deg,#fdba74,#fb923c);color:#000;font-weight:800;padding:13px;border-radius:999px;border:none;cursor:pointer;width:100%;font-size:16px;margin-top:12px}
+.btn:active{transform:scale(0.98)}
+input{width:100%;padding:13px 15px;border-radius:12px;border:1px solid rgba(255,255,255,0.2);margin:7px 0;background:rgba(255,255,255,0.15);color:white;outline:none;font-size:15px}
+input::placeholder{color:rgba(255,255,255,0.5)}
 .hidden{display:none}
-.link{color:#fdba74;font-weight:bold;cursor:pointer}
+.link{color:#fdba74;font-weight:700;cursor:pointer}
+.topbar{position:fixed;top:0;left:0;right:0;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,0.2);backdrop-filter:blur(10px)}
+.avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#fdba74,#fb923c);display:flex;align-items:center;justify-content:center;color:#000;font-weight:900;font-size:22px;margin:0 auto 10px}
+.pill{display:inline-block;background:rgba(255,255,255,0.15);padding:6px 12px;border-radius:999px;font-size:12px;margin:4px}
 </style>
 </head>
 <body>
+
+<!-- HOME -->
 <div id="home" class="center">
-<h1 style="font-size:45px;color:#fb923c;margin:0">Yaari Junction</h1>
-<p style="opacity:0.7">Dosti Da Nava Adda - Punjab</p>
-<div class="card" style="margin-top:30px">
-<h2>Sat Sri Akal Yaar! 🙏</h2>
-<p style="opacity:0.7">Teri Yaari Junction app hun live hai!</p>
-<button class="btn" onclick="document.getElementById('home').classList.add('hidden');document.getElementById('login').classList.remove('hidden')">Yaari Check Karo</button>
+  <h1 style="font-size:50px;color:#fb923c;margin:0;letter-spacing:-1px">Yaari Junction</h1>
+  <p style="opacity:0.7;margin:8px 0 0">Dosti Da Nava Adda - Punjab</p>
+  <div class="card" style="margin-top:30px">
+    <div class="avatar">YJ</div>
+    <h2 style="margin:10px 0">Sat Sri Akal Yaar! 🙏</h2>
+    <p style="opacity:0.7;font-size:14px">Barnala ton shuru hoyi apni Yaari app hun LIVE aa!</p>
+    <button class="btn" onclick="showPage('login')">Yaari Check Karo →</button>
+    <div style="margin-top:14px">
+      <span class="pill">🔥 100% Punjabi</span>
+      <span class="pill">💬 Yaari Chat Soon</span>
+    </div>
+  </div>
+  <p style="opacity:0.3;font-size:10px;margin-top:20px">Yaari Junction v3.0 - Real Login</p>
 </div>
-</div>
+
+<!-- LOGIN -->
 <div id="login" class="center hidden">
-<div class="card">
-<h2>Welcome Back Yaar! 🙏</h2>
-<p style="opacity:0.6;font-size:14px">Yaari Junction - Dosti Da Nava Adda</p>
-<input placeholder="Tera Naam / Username">
-<input placeholder="Email">
-<input type="password" placeholder="Password">
-<button class="btn">Login Karo</button>
-<p style="font-size:14px;color:rgba(255,255,255,0.7);margin-top:15px">Nava yaar? <span class="link">Signup</span></p>
-<p class="link" style="font-size:14px;margin-top:10px" onclick="document.getElementById('login').classList.add('hidden');document.getElementById('home').classList.remove('hidden')">← Piche Jao</p>
+  <div class="card">
+    <h2 id="formTitle" style="margin:0">Welcome Back Yaar! 🙏</h2>
+    <p id="formSub" style="opacity:0.6;font-size:13px;margin:6px 0 16px">Yaari Junction ch wapas aaya nu dil ton welcome</p>
+    <div id="nameField"><input id="inpName" placeholder="Tera Naam - Jivein Karan"></div>
+    <input id="inpEmail" placeholder="Email - karan@gmail.com">
+    <input id="inpPass" type="password" placeholder="Password - 6 akhar">
+    <button class="btn" id="actionBtn" onclick="handleAuth()">Login Karo</button>
+    <p id="msg" style="font-size:13px;margin:10px 0 0;min-height:18px;color:#fde68a"></p>
+    <p style="font-size:14px;color:rgba(255,255,255,0.7);margin-top:14px"><span id="switchText">Nava yaar?</span> <span class="link" onclick="toggleForm()"> <span id="switchBtn">Signup</span></span></p>
+    <p class="link" style="font-size:14px;margin-top:8px;opacity:0.8" onclick="showPage('home')">← Piche Jao</p>
+  </div>
 </div>
-</div>
-</body>
-</html>
+
+<!-- DASHBOARD -->
+<div id="dash" class="hidden">
+  <div class="topbar">
+    <b style="color:#fb923c">Yaari Junction</b>
+    <span class="link" style="font-size:14px" onclick="logout()">Logout</
