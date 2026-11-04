@@ -1,13 +1,124 @@
 <!DOCTYPE html>
-<html>
+<html lang="pa">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Yaari Junction - Dosti Da Adda</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yaari Junction - Dosti Da Nava Adda</title>
 <style>
-*{box-sizing:border-box} body{margin:0;font-family:system-ui,sans-serif;background:linear-gradient(180deg,#0f172a,#1e3a8a,#0ea5e9);min-height:100vh;color:white}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:linear-gradient(180deg,#0f172a 0%,#1e293b 30%,#1e3a8a 70%,#0ea5e9 100%);min-height:100vh;color:white}
+.hidden{display:none!important}
 .page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;flex-direction:column}
-.card{background:rgba(255,255,255,0.12);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,0.2);padding:26px;border-radius:22px;width:100%;max-width:380px;text-align:center}
-.btn{background:linear-gradient(90deg,#fdba74,#fb923c);color:#000;font-weight:800;padding:13px;border:none;border-radius:999px;width:100%;cursor:pointer;margin-top:12px;font-size:15px}
-input{width:100%;padding:12px 14px;border-radius:12px;border:1px solid rgba(255,255,255,0.2);margin:6px 0;background:rgba(255,255,255,0.15);color:white;outline:none}
-input::placeholder{color
+.card{background:rgba(255,255,255,0.1);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.15);padding:28px;border-radius:24px;width:100%;max-width:400px;box-shadow:0 20px 40px rgba(0,0,0,0.3)}
+.btn{background:linear-gradient(90deg,#fdba74,#fb923c);color:#000;font-weight:800;padding:13px;border:none;border-radius:999px;width:100%;cursor:pointer;font-size:15px;margin-top:10px}
+.btn-ghost{background:rgba(255,255,255,0.1);color:white;border:1px solid rgba(255,255,255,0.2)}
+input{width:100%;padding:13px 15px;border-radius:12px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.12);color:white;outline:none;margin:6px 0;font-size:15px}
+input::placeholder{color:rgba(255,255,255,0.5)}
+.topbar{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(15,23,42,0.8);backdrop-filter:blur(15px);border-bottom:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:10}
+.tabbar{position:fixed;bottom:0;left:0;right:0;height:64px;background:rgba(15,23,42,0.9);backdrop-filter:blur(15px);border-top:1px solid rgba(255,255,255,0.1);display:flex;justify-content:space-around;align-items:center;z-index:10}
+.tab{flex:1;text-align:center;padding:8px;font-size:11px;opacity:0.5;cursor:pointer}
+.tab.active{opacity:1;color:#fb923c}
+.link{color:#fdba74;font-weight:700;cursor:pointer}
+.avatar{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,#fdba74,#fb923c);display:flex;align-items:center;justify-content:center;color:#000;font-weight:900;font-size:22px}
+.friend{display:flex;align-items:center;gap:12px;padding:12px;background:rgba(255,255,255,0.07);border-radius:14px;margin:8px 0;cursor:pointer}
+.chatbox{height:300px;overflow-y:auto;background:rgba(0,0,0,0.2);border-radius:14px;padding:12px;margin:10px 0}
+.bubble{max-width:80%;padding:10px 14px;border-radius:16px;margin:6px 0;font-size:14px}
+.me{background:#fb923c;color:#000;margin-left:auto;border-bottom-right-radius:4px}
+.other{background:rgba(255,255,255,0.15);margin-right:auto;border-bottom-left-radius:4px}
+</style>
+</head>
+<body>
+
+<div id="home" class="page">
+<h1 style="font-size:52px;color:#fb923c;letter-spacing:-2px">Yaari Junction</h1>
+<p style="opacity:0.6;margin-top:6px">Dosti Da Nava Adda • Barnala, Punjab</p>
+<div class="card" style="margin-top:30px">
+<div class="avatar" style="margin:0 auto">YJ</div>
+<h2 style="margin:14px 0 6px">Sat Sri Akal Yaar! 🙏</h2>
+<p style="opacity:0.7;font-size:14px;line-height:1.5">Barnala ton shuru hoyi India di apni dosti wali app. 100% Punjabi touch!</p>
+<button class="btn" onclick="show('login')">Shuru Kariye →</button>
+<div style="margin-top:14px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><span style="background:rgba(255,255,255,0.1);padding:5px 10px;border-radius:999px;font-size:11px">🔥 500+ Yaar</span><span style="background:rgba(255,255,255,0.1);padding:5px 10px;border-radius:999px;font-size:11px">💬 Chat</span><span style="background:rgba(255,255,255,0.1);padding:5px 10px;border-radius:999px;font-size:11px">📍 Punjab</span></div>
+</div>
+<p style="opacity:0.3;font-size:10px;margin-top:24px">Yaari Junction v5.0 • Final Build</p>
+</div>
+
+<div id="login" class="page hidden">
+<div class="card">
+<h2 id="formTitle">Welcome Back Yaar! 🙏</h2>
+<p id="formSub" style="opacity:0.6;font-size:13px;margin:8px 0 16px">Login kar ke Yaari shuru kar</p>
+<div id="nameBox"><input id="name" placeholder="Tera Naam - Jivein Karan"></div>
+<input id="email" placeholder="Email - karan@gmail.com">
+<input id="pass" type="password" placeholder="Password">
+<button class="btn" id="authBtn" onclick="auth()">Login Karo</button>
+<p id="err" style="color:#fde68a;font-size:13px;min-height:18px;margin-top:8px"></p>
+<p style="font-size:14px;margin-top:12px;opacity:0.8"><span id="swText">Nava yaar?</span> <span class="link" onclick="switchAuth()"><span id="swBtn">Signup</span></span></p>
+<p class="link" style="font-size:13px;margin-top:10px;opacity:0.7" onclick="show('home')">← Piche</p>
+</div>
+</div>
+
+<div id="app" class="hidden">
+<div class="topbar"><b style="color:#fb923c">Yaari Junction</b><div style="display:flex;gap:12px;align-items:center"><span id="topName" style="font-size:13px;opacity:0.8"></span><span class="link" style="font-size:13px" onclick="logout()">Logout</span></div></div>
+
+<div id="tab-home" style="padding:70px 16px 80px;max-width:500px;margin:0 auto;width:100%">
+<div class="card" style="max-width:100%"><div class="avatar" id="dashAv">K</div><h2 id="dashName" style="margin:12px 0 4px">Sat Sri Akal!</h2><p id="dashEmail" style="opacity:0.6;font-size:13px"></p><div style="text-align:left;background:rgba(0,0,0,0.2);padding:12px;border-radius:12px;margin-top:14px;font-size:13px;line-height:1.6">✅ Verified Yaar<br>📍 Barnala, Punjab<br>🎉 v5.0 Member<br>🔥 100% Punjabi App</div></div>
+<div class="card" style="max-width:100%;margin-top:16px"><h3 style="font-size:15px">Aaj di Yaari Thought</h3><p style="opacity:0.7;font-size:13px;margin-top:8px">"Yaar bina zindagi adhoori, Yaari Junction te har din poori!"</p></div>
+</div>
+
+<div id="tab-yaar" class="hidden" style="padding:70px 16px 80px;max-width:500px;margin:0 auto;width:100%">
+<h3 style="margin-bottom:12px">Yaaran Di List 👥</h3>
+<div id="yaarList"></div>
+<div class="card" style="max-width:100%;margin-top:12px"><input id="newYaarName" placeholder="Nave yaar da naam"><button class="btn" onclick="addYaar()">+ Yaar Bnao</button></div>
+</div>
+
+<div id="tab-chat" class="hidden" style="padding:70px 16px 80px;max-width:500px;margin:0 auto;width:100%">
+<h3 style="margin-bottom:12px">Yaari Chat 💬</h3>
+<div class="chatbox" id="chatBox"><div class="bubble other">Sat Sri Akal Bai! Ki haal aa? 🙏</div><div class="bubble me">Vadiya yaar! Yaari Junction LIVE ho gayi! 🔥</div></div>
+<div style="display:flex;gap:8px"><input id="chatIn" placeholder="Message likh..." style="flex:1"><button class="btn" style="width:80px;margin:0" onclick="sendChat()">Send</button></div>
+</div>
+
+<div id="tab-profile" class="hidden" style="padding:70px 16px 80px;max-width:500px;margin:0 auto;width:100%">
+<div class="card" style="max-width:100%;text-align:center"><div class="avatar" id="profAv" style="margin:0 auto">K</div><h3 id="profName" style="margin-top:12px"></h3><p id="profEmail" style="opacity:0.6;font-size:13px"></p><button class="btn btn-ghost" style="margin-top:16px" onclick="logout()">Logout Karo</button><p style="font-size:11px;opacity:0.4;margin-top:16px">Yaari Junction v5.0 Final • Made in Barnala with ❤️</p></div>
+</div>
+
+<div class="tabbar">
+<div class="tab active" onclick="openTab('home',this)">🏠<br>Home</div>
+<div class="tab" onclick="openTab('yaar',this)">👥<br>Yaar</div>
+<div class="tab" onclick="openTab('chat',this)">💬<br>Chat</div>
+<div class="tab" onclick="openTab('profile',this)">👤<br>Profile</div>
+</div>
+</div>
+
+<script>
+let isLogin=true;
+let users={}; try{users=JSON.parse(localStorage.getItem('yj_users5')||'{}')}catch(e){}
+let cur=null; try{cur=JSON.parse(localStorage.getItem('yj_cur5')||'null')}catch(e){}
+let yaars=JSON.parse(localStorage.getItem('yj_yaars')||'["Amrit","Simran","Jass","Dilpreet"]');
+if(cur){showApp(cur)}
+function show(id){document.getElementById('home').classList.add('hidden');document.getElementById('login').classList.add('hidden');document.getElementById('app').classList.add('hidden');document.getElementById(id).classList.remove('hidden')}
+function switchAuth(){isLogin=!isLogin;document.getElementById('formTitle').innerText=isLogin?'Welcome Back Yaar! 🙏':'Nava Yaar Bano! 🎉';document.getElementById('formSub').innerText=isLogin?'Login kar ke Yaari shuru kar':'Nava account bna ke shuru kar';document.getElementById('authBtn').innerText=isLogin?'Login Karo':'Signup Karo';document.getElementById('swText').innerText=isLogin?'Nava yaar?':'Pehla ton yaar?';document.getElementById('swBtn').innerText=isLogin?'Signup':'Login';document.getElementById('nameBox').style.display=isLogin?'none':'block';document.getElementById('err').innerText=''}
+function auth(){
+let n=document.getElementById('name').value.trim();
+let e=document.getElementById('email').value.trim().toLowerCase();
+let p=document.getElementById('pass').value;
+let err=document.getElementById('err');
+if(!e||!p||(!isLogin&&!n)){err.innerText='Saare box bhar yaar!';return}
+if(isLogin){if(!users[e]||users[e].p!==p){err.innerText='Galat email/pass! Pehla Signup kar!';return}localStorage.setItem('yj_cur5',JSON.stringify(users[e]));showApp(users[e])}
+else{if(users[e]){err.innerText='Eh email pehla hai! Login kar!';return}users[e]={name:n,email:e,p:p};localStorage.setItem('yj_users5',JSON.stringify(users));localStorage.setItem('yj_cur5',JSON.stringify(users[e]));showApp(users[e])}
+}
+function showApp(u){
+document.getElementById('dashName').innerText='Sat Sri Akal, '+u.name+'!';document.getElementById('dashEmail').innerText=u.email;document.getElementById('dashAv').innerText=u.name.charAt(0).toUpperCase();
+document.getElementById('profName').innerText=u.name;document.getElementById('profEmail').innerText=u.email;document.getElementById('profAv').innerText=u.name.charAt(0).toUpperCase();document.getElementById('topName').innerText=u.name;
+renderYaars();show('app');openTab('home',document.querySelector('.tab'))
+}
+function openTab(t,el){
+document.getElementById('tab-home').classList.add('hidden');document.getElementById('tab-yaar').classList.add('hidden');document.getElementById('tab-chat').classList.add('hidden');document.getElementById('tab-profile').classList.add('hidden');
+document.getElementById('tab-'+t).classList.remove('hidden');
+document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));if(el)el.classList.add('active');
+}
+function renderYaars(){let html='';yaars.forEach(y=>{html+=`<div class="friend"><div class="avatar" style="width:40px;height:40px;font-size:16px">${y.charAt(0)}</div><div><b style="font-size:14px">${y}</b><div style="font-size:11px;opacity:0.6">Online • Barnala</div></div><div style="margin-left:auto" class="link" onclick="openTab('chat',document.querySelectorAll('.tab')[2])">Chat</div></div>`});document.getElementById('yaarList').innerHTML=html}
+function addYaar(){let v=document.getElementById('newYaarName').value.trim();if(!v)return;yaars.push(v);localStorage.setItem('yj_yaars',JSON.stringify(yaars));document.getElementById('newYaarName').value='';renderYaars()}
+function sendChat(){let inp=document.getElementById('chatIn');let v=inp.value.trim();if(!v)return;let box=document.getElementById('chatBox');box.innerHTML+=`<div class="bubble me">${v}</div>`;inp.value='';box.scrollTop=box.scrollHeight;setTimeout(()=>{box.innerHTML+=`<div class="bubble other">Samajh gaya yaar! 😊</div>`;box.scrollTop=box.scrollHeight},800)}
+function logout(){localStorage.removeItem('yj_cur5');location.reload()}
+</script>
+</body>
+</html>
