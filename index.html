@@ -1,65 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="pa">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Yaari Junction</title>
+<title>Yaari Junction - Dosti Da Adda</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#ff3366">
 <style>
-body{margin:0;font-family:Arial;background:#0f172a;color:#fff}
-.app{max-width:480px;margin:0 auto;background:linear-gradient(180deg,#1e3c72,#2a5298);min-height:100vh;padding-bottom:70px}
-.header{padding:15px;text-align:center;font-size:22px;font-weight:bold;background:rgba(0,0,0,0.3)}
-.tab{display:none;padding:15px}.tab.active{display:block}.hidden{display:none!important}
-input{width:90%;padding:12px;border-radius:20px;border:none;margin:5px}
-button{padding:12px 20px;border-radius:20px;border:none;background:#ff9f43;font-weight:bold}
-#chatBox{height:380px;overflow:auto;background:rgba(0,0,0,0.2);border-radius:15px;padding:10px;margin-bottom:10px}
-.msg-me{text-align:right;margin:6px}.msg-me span{background:#ff9f43;color:#000;padding:8px 12px;border-radius:15px;display:inline-block}
-.msg-bot{text-align:left;margin:6px}.msg-bot span{background:#fff;color:#000;padding:8px 12px;border-radius:15px;display:inline-block}
-.nav{display:flex;position:fixed;bottom:0;left:50%;transform:translateX(-50%);max-width:480px;width:100%;background:#000}
-.nav div{flex:1;text-align:center;padding:12px;cursor:pointer}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,Arial;background:#0f172a;color:#fff}
+.app{max-width:480px;margin:0 auto;min-height:100vh;background:linear-gradient(180deg,#1e3c72,#2a5298);position:relative;padding-bottom:70px}
+.header{background:rgba(0,0,0,0.4);padding:16px;text-align:center;font-size:22px;font-weight:900}
+.tab{display:none;padding:16px}
+.tab.show{display:block}
+.card{background:rgba(255,255,255,0.12);padding:16px;border-radius:16px;margin-top:20px}
+input{width:100%;padding:14px;border-radius:28px;border:none;font-size:16px;margin:10px 0}
+.btn{width:100%;padding:14px;border-radius:28px;border:none;background:#ff9f43;color:#000;font-weight:800;font-size:17px;cursor:pointer}
+#chatBox{height:58vh;overflow:auto;background:rgba(0,0,0,0.25);border-radius:16px;padding:12px}
+.me{text-align:right;margin:8px 0}
+.me span{background:#ff9f43;color:#000;padding:10px 14px;border-radius:18px 18px 4px 18px;display:inline-block;max-width:82%}
+.bot{text-align:left;margin:8px 0}
+.bot span{background:#fff;color:#111;padding:10px 14px;border-radius:18px 18px 18px 4px;display:inline-block;max-width:82%}
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);max-width:480px;width:100%;display:flex;background:rgba(0,0,0,0.9)}
+.nav div{flex:1;text-align:center;padding:14px 0;cursor:pointer;font-size:14px;font-weight:600}
 </style>
 </head>
 <body>
 <div class="app">
-<div class="header">Yaari Chat 💬</div>
-<div id="tab-login" class="tab active">
-<input id="userName" placeholder="Tuhada Naam"><br><br>
-<button onclick="login()">Shuru Karo</button>
+<div class="header">Yaari Junction 💬</div>
+<div id="tab-login" class="tab show">
+<div class="card">
+<h2>Welcome Yaar! 🙏</h2>
+<input id="userName" placeholder="Tuhada naam likho...">
+<button class="btn" onclick="doLogin()">Shuru Karo 🚀</button>
 </div>
-<div id="tab-chat" class="tab hidden">
-<div id="chatBox"><div class="msg-bot"><span>Sat Sri Akal! Ki haal aa? 🙏</span></div></div>
-<div style="display:flex"><input id="chatIn" placeholder="Message likh..."><button onclick="sendChat()">Send</button></div>
 </div>
-<div id="tab-home" class="tab hidden"><h2 id="dashName"></h2></div>
-<div id="tab-profile" class="tab hidden"><button onclick="logout()">Logout</button></div>
-<div class="nav"><div onclick="openTab('home')">Yaar</div><div onclick="openTab('chat')">Chat</div><div onclick="openTab('profile')">Profile</div></div>
+<div id="tab-chat" class="tab">
+<div id="chatBox"><div class="bot"><span>Sat Sri Akal Bai! Ki haal aa? 🙏</span></div></div>
+<div style="display:flex;gap:8px;margin-top:10px"><input id="chatIn" placeholder="Message likho..." onkeypress="if(event.key==='Enter')sendChat()"><button class="btn" onclick="sendChat()" style="width:85px">Send</button></div>
 </div>
-<script>
-let curUser=JSON.parse(localStorage.getItem('yj_cur5')||'null');
-function login(){let n=document.getElementById('userName').value.trim();if(!n)return;curUser={name:n};localStorage.setItem('yj_cur5',JSON.stringify(curUser));openTab('chat');}
-function openTab(t){document.querySelectorAll('.tab').forEach(e=>e.classList.add('hidden'));document.getElementById('tab-'+t).classList.remove('hidden');}
-function sendChat(){
- let v=document.getElementById('chatIn').value.trim();if(!v)return;
- let box=document.getElementById('chatBox');
- box.innerHTML+='<div class="msg-me"><span>'+v+'</span></div>';
- document.getElementById('chatIn').value='';
- box.scrollTop=box.scrollHeight;
- setTimeout(()=>{
-  let r=getReply(v);
-  box.innerHTML+='<div class="msg-bot"><span>'+r+'</span></div>';
-  box.scrollTop=box.scrollHeight;
- },600);
-}
-function getReply(m){
- m=m.toLowerCase();
- if(m.includes('hi')||m.includes('hello')||m.includes('ssa')){let a=["Oye hi! Ki haal aa? 😊","Sat Sri Akal veer! Kiddan? 🙏","Hello! Das fer ki chal reha?"];return a[Math.floor(Math.random()*a.length)];}
- if(m.includes('ki haal')||m.includes('kida')){let a=["Vadiya yaar! Tu suna?","Ek dum mast! Hor?","Full chakachak!"];return a[Math.floor(Math.random()*a.length)];}
- if(m.includes('kitho')){return "Main Barnala ton! Tu kithon? 📍";}
- if(m.includes('naam')){return "Mera naam Yaari Bot aa! 😜";}
- let a=["Haanji sahi keha! 👍","Sahi gal aa yaar 😊","Hahaha sachhi? 😂","Hor das ki chal reha?","Oye hoye fer ki hoya?","Wah kya baat aa 🔥"];
- return a[Math.floor(Math.random()*a.length)];
-}
-function logout(){localStorage.removeItem('yj_cur5');location.reload();}
-if(curUser){openTab('chat');}
-</script>
-</body>
-</html>
+<div id="tab-home" class="tab"><h2 id="dashName">Yaar List</h2><div id="yaarList"></div><div class="card"><input id="newYaarName" placeholder="Nava yaar"><button class="btn" onclick="addYaar()">Add Yaar +</button></div></div>
+<div id="tab-profile" class="tab"><div class="card"><h2 id="profileInfo">Profile</h2><p
