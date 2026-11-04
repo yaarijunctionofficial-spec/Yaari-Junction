@@ -1,37 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yaari Junction</title>
+<style>
+body{margin:0;font-family:Arial;background:#0f172a;color:#fff}
+.app{max-width:480px;margin:0 auto;background:linear-gradient(180deg,#1e3c72,#2a5298);min-height:100vh;padding-bottom:70px}
+.header{padding:15px;text-align:center;font-size:22px;font-weight:bold;background:rgba(0,0,0,0.3)}
+.tab{display:none;padding:15px}.tab.active{display:block}.hidden{display:none!important}
+input{width:90%;padding:12px;border-radius:20px;border:none;margin:5px}
+button{padding:12px 20px;border-radius:20px;border:none;background:#ff9f43;font-weight:bold}
+#chatBox{height:380px;overflow:auto;background:rgba(0,0,0,0.2);border-radius:15px;padding:10px;margin-bottom:10px}
+.msg-me{text-align:right;margin:6px}.msg-me span{background:#ff9f43;color:#000;padding:8px 12px;border-radius:15px;display:inline-block}
+.msg-bot{text-align:left;margin:6px}.msg-bot span{background:#fff;color:#000;padding:8px 12px;border-radius:15px;display:inline-block}
+.nav{display:flex;position:fixed;bottom:0;left:50%;transform:translateX(-50%);max-width:480px;width:100%;background:#000}
+.nav div{flex:1;text-align:center;padding:12px;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="header">Yaari Chat 💬</div>
+<div id="tab-login" class="tab active">
+<input id="userName" placeholder="Tuhada Naam"><br><br>
+<button onclick="login()">Shuru Karo</button>
+</div>
+<div id="tab-chat" class="tab hidden">
+<div id="chatBox"><div class="msg-bot"><span>Sat Sri Akal! Ki haal aa? 🙏</span></div></div>
+<div style="display:flex"><input id="chatIn" placeholder="Message likh..."><button onclick="sendChat()">Send</button></div>
+</div>
+<div id="tab-home" class="tab hidden"><h2 id="dashName"></h2></div>
+<div id="tab-profile" class="tab hidden"><button onclick="logout()">Logout</button></div>
+<div class="nav"><div onclick="openTab('home')">Yaar</div><div onclick="openTab('chat')">Chat</div><div onclick="openTab('profile')">Profile</div></div>
+</div>
+<script>
+let curUser=JSON.parse(localStorage.getItem('yj_cur5')||'null');
+function login(){let n=document.getElementById('userName').value.trim();if(!n)return;curUser={name:n};localStorage.setItem('yj_cur5',JSON.stringify(curUser));openTab('chat');}
+function openTab(t){document.querySelectorAll('.tab').forEach(e=>e.classList.add('hidden'));document.getElementById('tab-'+t).classList.remove('hidden');}
 function sendChat(){
-  let inp = document.getElementById('chatIn');
-  let v = inp.value.trim();
-  if(!v) return;
-  let box = document.getElementById('chatBox');
-  box.innerHTML += `<div style="text-align:right;margin:5px"><span style="background:#ff9f43;padding:8px 12px;border-radius:15px;display:inline-block">${v}</span></div>`;
-  inp.value='';
-  setTimeout(()=>{ 
-    let reply = getBotReply(v);
-    box.innerHTML += `<div style="text-align:left;margin:5px"><span style="background:#fff;padding:8px 12px;border-radius:15px;display:inline-block;box-shadow:0 1px 2px #0001">${reply}</span></div>`;
-    box.scrollTop = box.scrollHeight;
-  }, 800);
+ let v=document.getElementById('chatIn').value.trim();if(!v)return;
+ let box=document.getElementById('chatBox');
+ box.innerHTML+='<div class="msg-me"><span>'+v+'</span></div>';
+ document.getElementById('chatIn').value='';
+ box.scrollTop=box.scrollHeight;
+ setTimeout(()=>{
+  let r=getReply(v);
+  box.innerHTML+='<div class="msg-bot"><span>'+r+'</span></div>';
+  box.scrollTop=box.scrollHeight;
+ },600);
 }
-
-function getBotReply(msg){
-  msg = msg.toLowerCase();
-  if(msg.includes('hi') || msg.includes('hello') || msg.includes('sat sri akal') || msg.includes('ssa')){
-    let r = ["Oye hi! Ki haal aa yaar? 😊","Sat Sri Akal veer! Kiddan? 🙏","Hello hello! Yaari Junction te swagat aa! 🔥"];
-    return r[Math.floor(Math.random()*r.length)];
-  }
-  if(msg.includes('ki haal') || msg.includes('kida') || msg.includes('kiven')){
-    let r = ["Vadiya yaar! Tu suna? 😎","Ek dum mast! Tusi daso?","Full chakachak! Hor ki chal reha?"];
-    return r[Math.floor(Math.random()*r.length)];
-  }
-  if(msg.includes('naam') || msg.includes('name')){
-    return "Mera naam Yaari Bot aa! Tuhada yaar! 😜";
-  }
-  if(msg.includes('kitho') || msg.includes('where')){
-    return "Main Barnala to! Tu kithon belong karda? 📍";
-  }
-  if(msg.includes('bored') || msg.includes('bor')){
-    return "Chal koi game kheliye? Ya koi joke sunava? 😂";
-  }
-  // normal random replies
-  let random = ["Haanji bilkul sahi keha! 👍","Sahi gal aa yaar! 😊","Hahaha sachhi? 😂","Hor das ki chal reha?","Oye hoye! Fer ki hoya?","Wah yaar kya baat aa! 🔥","Samajh gaya main! Hor?","Chal hor suna!"];
-  return random[Math.floor(Math.random()*random.length)];
+function getReply(m){
+ m=m.toLowerCase();
+ if(m.includes('hi')||m.includes('hello')||m.includes('ssa')){let a=["Oye hi! Ki haal aa? 😊","Sat Sri Akal veer! Kiddan? 🙏","Hello! Das fer ki chal reha?"];return a[Math.floor(Math.random()*a.length)];}
+ if(m.includes('ki haal')||m.includes('kida')){let a=["Vadiya yaar! Tu suna?","Ek dum mast! Hor?","Full chakachak!"];return a[Math.floor(Math.random()*a.length)];}
+ if(m.includes('kitho')){return "Main Barnala ton! Tu kithon? 📍";}
+ if(m.includes('naam')){return "Mera naam Yaari Bot aa! 😜";}
+ let a=["Haanji sahi keha! 👍","Sahi gal aa yaar 😊","Hahaha sachhi? 😂","Hor das ki chal reha?","Oye hoye fer ki hoya?","Wah kya baat aa 🔥"];
+ return a[Math.floor(Math.random()*a.length)];
 }
+function logout(){localStorage.removeItem('yj_cur5');location.reload();}
+if(curUser){openTab('chat');}
+</script>
+</body>
+</html>
