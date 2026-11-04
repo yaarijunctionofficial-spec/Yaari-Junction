@@ -1,27 +1,52 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Yaari Junction</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body{margin:0;font-family:sans-serif;background:#181525;color:white;text-align:center}
-.header{padding:40px 20px}
-.card{background:#2a273f;padding:25px;border-radius:20px;margin:20px auto;max-width:360px;box-shadow:0 10px 30px rgba(0,0,0,0.3)}
-button{background:#FF9F45;color:#000;padding:14px 30px;border:none;border-radius:30px;font-weight:bold;font-size:17px;cursor:pointer}
-h1{margin:10px 0 5px 0;color:#FF9F45}
-</style>
-</head>
-<body>
-<div class="header">
-<div style="font-size:70px">🧡</div>
-<h1>Yaari Junction</h1>
-<p>Dosti Da Nava Adda - Punjab</p>
-</div>
-<div class="card">
-<h3>Sat Sri Akal Yaar! 🙏</h3>
-<p>Teri Yaari Junction app hun live hon wali aa!</p>
-<button onclick="alert('Lao Ji, App Kaam Kar Rahi Aa! Next Step Vercel Te!')">Yaari Check Karo</button>
-</div>
-<p style="opacity:0.4;margin-top:30px">Version 1.0 | Built by yaarijunctionofficial</p>
-</body>
-</html>
+"use client"
+import { useState } from 'react'
+
+export default function YaariJunction() {
+  const [showLogin, setShowLogin] = useState(false)
+  const [isLogin, setIsLogin] = useState(true)
+
+  if (showLogin) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-slate-900 to-blue-900 flex items-center justify-center p-4">
+        <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl w-full max-w-md">
+          <h2 className="text-3xl font-bold text-white text-center mb-2">
+            {isLogin ? "Welcome Back Yaar! 🙏" : "Nava Yaar Bano! 🎉"}
+          </h2>
+          <p className="text-white/60 text-center mb-6">Yaari Junction - Dosti Da Nava Adda</p>
+          
+          <input type="text" placeholder="Tera Naam / Username" className="w-full p-3 rounded-xl mb-3 bg-white/20 text-white placeholder-white/50" />
+          <input type="email" placeholder="Email" className="w-full p-3 rounded-xl mb-3 bg-white/20 text-white placeholder-white/50" />
+          <input type="password" placeholder="Password" className="w-full p-3 rounded-xl mb-4 bg-white/20 text-white placeholder-white/50" />
+          
+          <button className="w-full bg-orange-400 text-black font-bold p-3 rounded-xl">
+            {isLogin ? "Login Karo" : "Signup Karo"}
+          </button>
+          
+          <p className="text-white/70 text-center mt-4 text-sm">
+            {isLogin ? "Nava yaar?" : "Pehla ton yaar?"} 
+            <span onClick={() => setIsLogin(!isLogin)} className="text-orange-300 cursor-pointer font-bold ml-1">
+              {isLogin ? "Signup" : "Login"}
+            </span>
+          </p>
+          <button onClick={() => setShowLogin(false)} className="w-full text-white/50 text-sm mt-4">← Piche Jao</button>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-blue-900 flex flex-col items-center justify-center text-center p-4">
+      <h1 className="text-5xl font-bold text-orange-400">Yaari Junction</h1>
+      <p className="text-white/70 mt-2">Dosti Da Nava Adda - Punjab</p>
+      
+      <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl mt-10 max-w-md">
+        <h2 className="text-2xl font-bold text-white">Sat Sri Akal Yaar! 🙏</h2>
+        <p className="text-white/70 mt-2">Teri Yaari Junction app hun live hai!</p>
+        <button onClick={() => setShowLogin(true)} className="mt-6 bg-orange-300 text-black font-bold px-8 py-3 rounded-full">
+          Yaari Check Karo
+        </button>
+      </div>
+      <p className="text-white/30 text-xs mt-10">Version 2.0 | Login Added</p>
+    </div>
+  )
+}
