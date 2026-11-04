@@ -1,0 +1,18 @@
+{
+  "name": "Yaari Junction - Dosti Da Nava Adda",
+  "short_name": "Yaari Junction",
+  "description": "Barnala ton shuru hoyi dosti di app - 100% Punjabi touch",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#fb923c",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/740/740214.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
